@@ -86,3 +86,17 @@ declare @lname char(50);
 execute getEmpDetails3 2  ;
 print @fName + @lname;
 
+--exception handling in procedures
+CREATE PROCEDURE usp_ExampleProc
+AS
+    SELECT * FROM NonexistentTable;
+GO
+
+BEGIN TRY
+    EXECUTE usp_ExampleProc;
+END TRY
+BEGIN CATCH
+    SELECT 
+        ERROR_NUMBER() AS ErrorNumber
+        ,ERROR_MESSAGE() AS ErrorMessage;
+END CATCH;
